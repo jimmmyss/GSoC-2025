@@ -12,7 +12,7 @@ def download_file(filename, token):
         print(f"Starting download: {filename}")
         local_filename = hf_hub_download(
             repo_id="oscar-corpus/OSCAR-2301",
-            filename=f"el_meta/{filename}",
+            filename=f"oscar/{filename}",
             repo_type="dataset",
             local_dir=".",
             token=token
@@ -32,10 +32,10 @@ def main():
     
     token = sys.argv[1]
     
-    # Create el_meta directory if it doesn't exist
-    os.makedirs("el_meta", exist_ok=True)
+    # Create oscar directory if it doesn't exist
+    os.makedirs("oscar", exist_ok=True)
     
-    # Generate list of all el_meta files (including parts 54-60)
+    # Generate list of all oscar files (including parts 54-60)
     files_to_download = []
     
     # Add checksum file
