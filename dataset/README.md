@@ -18,7 +18,7 @@ The `dataset` directory contains the four sequential stages of the data‑proces
   - Content types and page length
    Enriches each JSON record by scraping additional metadata (e.g., web page titles, HTTP headers, linked assets).
 
-### 4. `categorize`  
+### 4. `classify`  
 - Assign categories using:  
   - Rule-based heuristics  
   - Classification models  
