@@ -8,8 +8,8 @@ The `dataset` directory contains the four sequential stages of the data‑proces
 ## 2.`format`
    Reads the `.jsonl` archives, extracts all domain names from every link, aggregates how many times each domain appears, and converts each record into the standardized `.parquet` schema.
 
-## 3. `Scraper`
+## 3. `scrape`
    Enriches each JSON record by scraping additional metadata (e.g., web page titles, HTTP headers, linked assets).
 
-## 4. `Categorizer`
+## 4. `categorize`
    Applies classification models or rule‑based logic to assign topic or quality categories to each JSON object for downstream filtering and analysis.
