@@ -9,7 +9,6 @@ This folder contains dataset downloaders for [Oscar](https://huggingface.co/data
 python download_oscar.py <hugging_face_api_token>
 ```
 
-
 ### download_hplt.py
 ```bash
 python download_hplt.py
@@ -22,7 +21,7 @@ After running each downloader script, a compressed `.zst` file will be created i
 ### Decompress
 ```bash
 cd <directory>
-find . -name "*.zst" -type f -exec zstd -d {} \;
+find . -name "*.zst" -type f -exec zstd -d --rm {} \;
 cd ..
 ```
 
