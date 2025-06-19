@@ -26,15 +26,10 @@ python3 create_hplt_parquet.py hplt
 
 | domain             | count   |
 |--------------------|---------|
-| google.com         | 100000  |
-| youtube.com        | 80000   |
-| facebook.com       | 60000   |
-| wikipedia.org      | 40000   |
-| reddit.com         | 30000   |
-| amazon.com         | 25000   |
-| twitter.com        | 20000   |
-| stackoverflow.com  | 15000   |
-| bing.com           | 12000   |
+| wikipedia.com      | 40000   |
+| google.com         | 10000   |
+| youtube.com        | 5000    |
+| facebook.com       | 2000    |
 | ...                | ...     |
 
 ### Output structure
