@@ -36,15 +36,15 @@ These values are extracted based on the [Open Graph protocol](https://ogp.me/), 
 
 ## Proccesing pipeline
 
-1. open input `.parquet` → figure out which column is the domain.  
-2. if a matching `*_metadata.parquet` already exists.
-   * count its rows → know how many full 10k blocks are done.
-   * throw away the remainder of the last half-written block.
-   * seek the input to the first un-finished row.
-3. crunch the next 10k domains in parallel.
-4. append the new rows to the in-memory table & overwrite the metadata file.
-5. wipe caches / sockets / stats, run a quick GC → keep memory flat.
-6. repeat until the input is exhausted → print a tidy success summary.
+1. Open input `.parquet` → figure out which column is the domain.  
+2. If a matching `*_metadata.parquet` already exists.
+   * Count its rows → know how many full 10k blocks are done.
+   * Throw away the remainder of the last half-written block.
+   * Seek the input to the first un-finished row.
+3. Crunch the next 10k domains in parallel.
+4. Append the new rows to the in-memory table & overwrite the metadata file.
+5. Wipe caches / sockets / stats, run a quick GC → keep memory flat.
+6. Repeat until the input is exhausted → print a tidy success summary.
 
 ## How to run scraper
 
