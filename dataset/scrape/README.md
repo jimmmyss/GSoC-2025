@@ -50,7 +50,7 @@ These values are extracted based on the [Open Graph protocol](https://ogp.me/), 
 
 ### domain_scraper.py
 ```bash
-python3 domain_scraper.py oscar.parquet
+python3 domain_scraper.py <dataset>.parquet [max_workers]
 ```
 
 ## Output format
