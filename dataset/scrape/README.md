@@ -53,7 +53,7 @@ These values are extracted based on the [Open Graph protocol](https://ogp.me/), 
 python3 domain_scraper.py oscar.parquet
 ```
 
-### Output format
+## Output format
 
 | domain            | count  | status_code | title | meta_description | keywords | og_title | og_description | og_type |
 |-------------------|--------|-------------|-------|------------------|----------|----------|----------------|---------|
