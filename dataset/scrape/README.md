@@ -34,6 +34,18 @@ These values are extracted based on the [Open Graph protocol](https://ogp.me/), 
   - Extracted from the `<meta property="og:type" content="...">` tag.
   - Specifies the type of object (e.g., `website`, `article`, `video.movie`, etc.).
 
+## Proccesing pipeline
+
+1. open input `.parquet` → figure out which column is the domain.  
+2. if a matching `*_metadata.parquet` already exists.
+   * count its rows → know how many full 10k blocks are done.
+   * throw away the remainder of the last half-written block.
+   * seek the input to the first un-finished row.
+3. crunch the next 10k domains in parallel.
+4. append the new rows to the in-memory table & overwrite the metadata file.
+5. wipe caches / sockets / stats, run a quick GC → keep memory flat.
+6. repeat until the input is exhausted → print a tidy success summary.
+
 ## How to run scraper
 
 ### domain_scraper.py
