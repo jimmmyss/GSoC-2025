@@ -11,12 +11,13 @@ The `dataset` directory contains the four sequential stages of the data‑proces
 - Write the final `<dataset>_domains.parquet` that contains a deduplicated, sorted list of domains.
 
 ### 3. `scrape`  
-- Enrich records by scraping metadata such as:  
-  - Web page titles  
-  - HTTP headers  
-  - Linked assets  
-  - Content types and page length
-   Enriches each JSON record by scraping additional metadata (e.g., web page titles, HTTP headers, linked assets).
+- Enrich records by scraping the following metadata:  
+  - `status_code`
+  - `title`
+  - `meta_description`
+  - `keywords` 
+  - Open Graph Metadata
+- Write the final `<dataset>_domains_metadata.parquet` that contains all of the metadata scraped for each domain.
 
 ### 4. `classify`  
 - Assign categories using:  
