@@ -20,4 +20,4 @@ The `dataset` directory contains the four sequential stages of the data‑proces
 - Write the final `<dataset>_domains_metadata.parquet` that contains all of the scraped metadata for each domain.
 
 ### 4. `classify`  
-- Assign categories using zero-shot a classification model
+- Assign categories using a zero-shot classification model
