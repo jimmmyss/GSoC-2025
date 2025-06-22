@@ -21,3 +21,4 @@ The `dataset` directory contains the four sequential stages of the data‑proces
 
 ### 4. `classify`  
 - Assign categories using a zero-shot classification model.
+- Write the final `<dataset>_domains_metadata_categories.parquet` that contains all of categories.
