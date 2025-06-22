@@ -20,8 +20,4 @@ The `dataset` directory contains the four sequential stages of the data‑proces
 - Write the final `<dataset>_domains_metadata.parquet` that contains all of the scraped metadata for each domain.
 
 ### 4. `classify`  
-- Assign categories using:  
-  - Rule-based heuristics  
-  - Classification models  
-  - Language or topic filters for downstream curation
-   Applies classification models or rule‑based logic to assign topic or quality categories to each JSON object for downstream filtering and analysis.
+- Assign categories using zero-shot a classification model
