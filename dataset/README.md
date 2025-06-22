@@ -17,7 +17,7 @@ The `dataset` directory contains the four sequential stages of the data‑proces
   - `meta_description`
   - `keywords` 
   - Open Graph Metadata
-- Write the final `<dataset>_domains_metadata.parquet` that contains all of the metadata scraped for each domain.
+- Write the final `<dataset>_domains_metadata.parquet` that contains all of the scraped metadata for each domain.
 
 ### 4. `classify`  
 - Assign categories using:  
