@@ -23,12 +23,12 @@ The Enhanced Domain Classifier takes metadata from websites—like domain name, 
 
 Uses six state-of-the-art multilingual embedding models to ensure accurate predictions across languages:
 
-- `E5-Large` (multilingual)  
-- `MPNet` (paraphrase-multilingual)  
-- `MiniLM` (lightweight multilingual)  
-- `LaBSE` (language-agnostic BERT)  
-- `Jina Embeddings v3`
-- `mDeBERTa` (multilingual)  
+- [`multilingual-e5-large`](https://huggingface.co/intfloat/multilingual-e5-large)
+- [`paraphrase-multilingual-mpnet-base-v2`](https://huggingface.co/sentence-transformers/paraphrase-multilingual-mpnet-base-v2)
+- ['paraphrase-multilingual-MiniLM-L12-v2'](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2)  
+- [`LaBSE`](https://huggingface.co/sentence-transformers/LaBSE)  
+- [`jina-embeddings-v3`](https://huggingface.co/jinaai/jina-embeddings-v3)
+- [`mDeBERTa-v3-base-xnli-multilingual-nli-2mil7`](https://huggingface.co/MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7)
 
 Each model generates vector embeddings used for downstream classification.
 
@@ -56,7 +56,7 @@ Each model generates vector embeddings used for downstream classification.
 
 ### classify.py
 ```bash
-python enhanced_domain_classifier.py <dataset>.parquet
+python classify.py <dataset>.parquet
 ```
 
 ## Output format
