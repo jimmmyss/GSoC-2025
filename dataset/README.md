@@ -28,5 +28,9 @@ The `dataset` directory contains the four sequential stages of the data‑proces
 - Write the output to `<dataset>_domains_metadata.parquet` that contains all of the scraped metadata for each domain.
 
 ### 4. `classify` (only for metadata)
+- Assign categories using a 6-model classification pipeline and gemini.
+- Write output to `<dataset>_domains_metadata_categories.parquet`.
+
+### 5. `analysis` (optional)
 - Assign categories using a 6-model classification pipeline.
 - Write output to `<dataset>_domains_metadata_categories.parquet`.
