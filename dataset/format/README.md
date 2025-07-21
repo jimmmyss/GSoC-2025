@@ -1,5 +1,6 @@
 # `format`
 
+## Metadata format
 Each of these programs will read through the entire directory created in the previous step and will look for all `.jsonl` files. For each file found, the script will:
 
 1. **Resume or start processing** from the last checkpoint, if available.  
@@ -8,21 +9,40 @@ Each of these programs will read through the entire directory created in the pre
 4. **Write Per‑File Outputs** as per-file `.parquet` in the `merged/` folder.
 5. **After all files are processed**, load all the per‑file Parquet files, sum domain counts across them, sort by frequency, write the definitive `oscar_domains.parquet` file and remove the temporary `<dataset>_domains` directory.
 
+## Landing page format
+
+This program will read through the entire directory created in the previous and processes JSONL and will look for all `.jsonl` files. For each file found, the script will:
+
+1. **Process files in numerical order** (1.jsonl, 2.jsonl, etc.) with resume capability.
+2. **Stream and parse** each JSON line to extract URL and text content.
+3. **Filter for landing pages** - keeps only domain-level URLs and landing page paths.
+4. **Batch processing** of 100,000 records with memory management and garbage collection.
+5. **Output single parquet file** with all original fields plus text character count field.
+
+**Landing page types filtered:**
+- **Domain-level URLs**: https://example.com, https://example.com/
+- **Landing page paths**: /home, /index.html, /main.php, /welcome, /dashboard, etc.
+
 ## How to run each formatter
 
-### create_oscar_parquet.py
+### format_metadata_oscar.py
 ```bash
-python3 create_oscar_parquet.py oscar
+python3 format_metadata_oscar.py <oscar_directory>
 ```
 
-### create_hplt_parquet.py
+### format_metadata_hplt.py
 ```bash
-python3 create_hplt_parquet.py hplt
+python3 format_metadata_hplt.py <hplt_directory>
+```
+
+### format_landing_page_hplt.py
+```bash
+python3 format_landing_page_hplt.py <hplt_directory>
 ```
 
 ## Output
 
-### Output format
+### Metadata output format
 
 | domain             | count   |
 |--------------------|---------|
@@ -32,16 +52,15 @@ python3 create_hplt_parquet.py hplt
 | facebook.com       | 2000    |
 | ...                | ...     |
 
-### Output structure
+### Landing page output format
 
-```text
-<dataset>_domains/
-├── checkpoints/           # JSON files recording processed line counts
-├── merged/                # Intermediate per-file .parquet results
-└── progress.json          # Tracks which files have completed
-
-<dataset>_domains.parquet  # Final merged domain frequency Parquet file
-```
+| f | o | s | rs | u | c | ts | collection | lang | prob | text | seg_langs | robotstxt | id | filter | pii | doc_scores | text_char_count |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| /data/file1.warc | 3408300706 | 104343 | 374173 | https://wikipedia.org/ | text/html | 2023-10-13T03:53:51Z | archivebot | ["en"] | [0.95] | "Wikipedia is a free online encyclopedia..." | ["en"] | allowed | abc123def456 | keep | [] | [0.87, 0.92] | 2456 |
+| /data/file2.warc | 2156890123 | 87234 | 298456 | https://github.com/ | text/html | 2023-10-13T04:12:33Z | archivebot | ["en"] | [0.98] | "GitHub is where over 100 million developers..." | ["en"] | allowed | def789ghi012 | keep | [] | [0.91, 0.89] | 1823 |
+| /data/file3.warc | 5672341890 | 156789 | 445621 | https://example.com/home | text/html | 2023-10-13T05:23:17Z | archivebot | ["en"] | [0.88] | "Welcome to our homepage. We provide..." | ["en"] | allowed | ghi345jkl678 | keep | [] | [0.76, 0.84] | 3201 |
+| /data/file4.warc | 1234567890 | 92156 | 312098 | https://stackoverflow.com/ | text/html | 2023-10-13T06:45:29Z | archivebot | ["en"] | [0.96] | "Stack Overflow is the largest community..." | ["en"] | allowed | jkl901mno234 | keep | [] | [0.93, 0.88] | 1967 |
+| /data/file5.warc | 7890123456 | 134567 | 398745 | https://reddit.com/index | text/html | 2023-10-13T07:18:52Z | archivebot | ["en"] | [0.89] | "Reddit is a network of communities..." | ["en"] | allowed | mno567pqr890 | keep | [] | [0.81, 0.86] | 2734 |
 
 ## Dataset format
 
@@ -110,4 +129,3 @@ Below are the JSON schemas for the `Oscar` and `HPLT` datasets. Each schema repr
   "doc_scores": [number, number]    // Document quality scores array
 }
 ```
-
