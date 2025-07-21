@@ -1,4 +1,4 @@
-# `dataset` folder overview
+# `dataset`
 
 The `dataset` directory contains the four sequential stages of the data‑processing pipeline:
 
