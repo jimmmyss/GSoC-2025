@@ -48,9 +48,9 @@ These values are extracted based on the [Open Graph protocol](https://ogp.me/), 
 
 ## How to run scraper
 
-### domain_scraper.py
+### scrape.py
 ```bash
-python3 domain_scraper.py <dataset>.parquet [max_workers]
+python3 scrape.py <dataset>.parquet [max_workers]
 ```
 
 ## Output format
