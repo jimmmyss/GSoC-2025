@@ -26,7 +26,7 @@
 - **CountVectorizer**: Text vectorization (1-2 grams, max 5000 features)
 - **BERTopic**: Topic modeling with KeyBERT and MaximalMarginalRelevance representation
 
-## Output Files
+### Output Files
 
 The system creates a `domain_categories/` directory with three output formats:
 
@@ -71,7 +71,7 @@ Total Categories: 12
 }
 ```
 
-## Discovery Process
+### Discovery Process
 
 ### Phase 1: Model Setup
 - Loads multilingual embedding model with GPU/CPU detection
