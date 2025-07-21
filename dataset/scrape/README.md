@@ -1,4 +1,4 @@
-# `scrape`
+# `scrape` (only for metadata)
 
 After the creation of each individual `.parquet` file, the scraper will go through **each domain** and extract the following metadata from the corresponding web pages:
 
