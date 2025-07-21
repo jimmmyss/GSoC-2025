@@ -1,6 +1,7 @@
-# `BERTopic Domain Category Discovery`
+# `analysis`
 
-## Unsupervised Category Discovery (`bertopic_domain_discovery.py`)
+## Metadata analysis
+
 **Automatically discovers hidden domain categories from metadata without any predefined categories.** This approach uses unsupervised machine learning to analyze domain metadata, cluster similar domains together, and generate meaningful category names based on discovered patterns.
 
 **How it works:**
@@ -24,26 +25,6 @@
 - **HDBSCAN**: Clustering (min 20 docs per cluster, euclidean metric)
 - **CountVectorizer**: Text vectorization (1-2 grams, max 5000 features)
 - **BERTopic**: Topic modeling with KeyBERT and MaximalMarginalRelevance representation
-
-## How to run
-
-```bash
-python3 bertopic_domain_discovery.py <parquet_file>
-```
-
-**Example:**
-```bash
-python3 bertopic_domain_discovery.py hplt_domains_landing_pages.parquet
-```
-
-## Input Requirements
-
-**Parquet file with domain metadata:**
-- `domain` - Clean domain name (e.g., "wikipedia.org")
-- `title` - Page title (optional but recommended)
-- `meta_description` - Meta description (optional but recommended)
-
-Minimum 50 valid text entries required for analysis.
 
 ## Output Files
 
@@ -121,16 +102,14 @@ Total Categories: 12
 - Ranks categories by document count
 - Creates comprehensive topic metadata
 
-## Expected Results
+## Landing page analysis
 
-**Typical Discovery:**
-- **10-20 categories** for diverse domain datasets
-- **5-15% outliers** (domains that don't fit clear categories)
-- **Processing time**: 5-30 minutes depending on dataset size
-- **Memory usage**: Optimized for large datasets with batch processing
+## How to run
 
-**Best suited for:**
-- Exploratory analysis of domain collections
-- Discovering unexpected domain patterns
-- Creating data-driven category taxonomies
-- Understanding content distribution in web crawl data 
+```bash
+python3 analysis_metadata.py <parquet_file>
+```
+
+```bash
+python3 analysis_landing_page.py <parquet_file>
+```
