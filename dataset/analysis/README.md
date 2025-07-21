@@ -104,12 +104,16 @@ Total Categories: 12
 
 ## Landing page analysis
 
+-
+
 ## How to run
 
+### analysis_metadata.py
 ```bash
 python3 analysis_metadata.py <parquet_file>
 ```
 
+### analysis_landing_page.py
 ```bash
 python3 analysis_landing_page.py <parquet_file>
 ```
