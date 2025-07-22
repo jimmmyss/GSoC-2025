@@ -32,5 +32,4 @@ The `dataset` directory contains the four sequential stages of the data‑proces
 - Write output to `<dataset>_domains_metadata_categories.parquet`.
 
 ### 5. `analysis` (optional)
-- Assign categories using a 6-model classification pipeline.
-- Write output to `<dataset>_domains_metadata_categories.parquet`.
+- Automated topic modeling for domain category discovery with BERTopic.
