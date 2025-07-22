@@ -57,7 +57,7 @@ pip install discord.py
 ```
 
 ### Configuration
-1. Replace bot token in line 225:
+Replace bot token in line 225:
 ```python
 bot.run('YOUR_BOT_TOKEN_HERE')
 ```
