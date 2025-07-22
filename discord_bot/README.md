@@ -3,8 +3,6 @@
 ## Overview
 Interactive Discord bot with button-based UI for server administration. Provides announcement posting, message clearing, and automated channel management.
 
-## Bot Functions
-
 ### 🔔 Announce Button
 **Purpose**: Send messages to any specified channel
 
