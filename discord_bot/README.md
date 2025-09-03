@@ -3,7 +3,7 @@
 ## Overview
 Interactive Discord bot with button-based UI for server administration. Provides announcement posting, message clearing, and automated channel management.
 
-### 🔔 Announce Button
+### Announce Button
 **Purpose**: Send messages to any specified channel
 
 **Workflow**:
@@ -16,7 +16,7 @@ Interactive Discord bot with button-based UI for server administration. Provides
 7. Bot sends message to specified channel
 8. Returns to main menu
 
-### 🗑️ Clear Button
+### Clear Button
 **Purpose**: Delete specified number of messages from channels
 
 **Workflow**:
@@ -30,7 +30,7 @@ Interactive Discord bot with button-based UI for server administration. Provides
 8. Bot deletes specified number of messages
 9. Returns to main menu
 
-### ❓ Help Button
+### Help Button
 **Purpose**: Display information about available commands
 
 **Workflow**:
@@ -40,7 +40,7 @@ Interactive Discord bot with button-based UI for server administration. Provides
    - **Clear**: "Clears messages from the channel"
 3. "Back" button returns to main menu
 
-### 🔗 Create Invite Command
+### Create Invite Command
 **Purpose**: Generate permanent server invites
 
 **Usage**: Type `.createinvite` in any channel

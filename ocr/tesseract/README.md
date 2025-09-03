@@ -1,16 +1,12 @@
-# Tesseract OCR Tool
-
-A Python-based OCR (Optical Character Recognition) tool specifically designed for processing PDF documents containing both Greek and English text. This tool handles the unique challenges of Greek text recognition, including proper accent restoration and character normalization.
+# Tesseract
 
 ## Overview
 
-This OCR tool converts PDF documents to text using Tesseract OCR engine with specialized processing for Greek and English languages. The tool performs three main operations:
+This OCR pipelne converts PDF documents to text using Tesseract OCR engine with specialized processing for Greek and English languages. The tool performs three main operations:
 
 1. **Raw OCR Extraction** - Converts PDF pages to images and extracts text using Tesseract
 2. **Text Normalization** - Strips accents and normalizes characters for consistent processing
 3. **Accent Restoration** - Uses Hunspell dictionaries to restore proper Greek accents and correct spelling
-
-The tool outputs multiple files: raw OCR text, normalized text without accents, spell-corrected text with restored accents, and a list of unrecognized words for review.
 
 ## In-Depth Processing
 
@@ -51,10 +47,21 @@ The post-processing stage consists of two main phases:
 - Maintains formatting and spacing from the original document
 - Handles encoding complexities between Hunspell's internal representation and UTF-8 output
 
-**Progress Tracking:**
-- Provides real-time progress bars for page processing and spell checking
-- Tracks and reports unknown words that aren't found in dictionaries
-- Maintains detailed logging of the processing pipeline
+## Output
+
+This tool processes scanned text and produces multiple output files to help with text analysis and correction. The outputs are as follows:
+
+1. **Raw OCR Text** (`_ocr.txt`)  
+   Contains the direct output from the OCR engine
+
+2. **Normalized Text** (`ocr_stripped.txt`)  
+   A version of the text with all the accents removed
+
+3. **Spell-Corrected Text** (`ocr_corrected.txt`)  
+   The text after Hunspell's spell correction and accent restoration
+
+4. **Unrecognized Words** (`unknown_words.txt`)  
+   A list of words that could not be confidently recognized or corrected
 
 ## Installation and Setup
 
@@ -62,26 +69,17 @@ The post-processing stage consists of two main phases:
 
 **System Dependencies:**
 ```bash
-# Ubuntu/Debian
 sudo apt update
 sudo apt install tesseract-ocr tesseract-ocr-ell tesseract-ocr-eng
 sudo apt install python3-hunspell
 sudo apt install hunspell-en-us hunspell-el
-
-# Alternative: Install Hunspell dictionaries manually
-sudo apt install hunspell-en-us hunspell-el-gr
+sudo apt install poppler-utils
 ```
 
 **Python Dependencies:**
 ```bash
 pip install pdf2image Pillow pytesseract tqdm hunspell
 ```
-
-**Additional Requirements:**
-- `poppler-utils` for PDF to image conversion:
-  ```bash
-  sudo apt install poppler-utils
-  ```
 
 **Dictionary Files:**
 The tool expects Hunspell dictionaries at:
@@ -99,12 +97,5 @@ python tesseract.py <document>.pdf
 ```bash
 python tesseract.py <document>.pdf <dpi>
 ```
-
-**Output Files:**
-The tool generates several output files with the same base name as the input PDF:
-- `*_ocr.txt` - Raw OCR output
-- `*_ocr_stripped.txt` - Text with accents removed and characters normalized
-- `*_ocr_corrected.txt` - Final output with restored accents and spell corrections
-- `*_unknown_words.txt` - List of words not found in dictionaries
 
 **Note:** If Hunspell dictionaries are not available, the tool will still function but will only perform character normalization without accent restoration or spell checking.
