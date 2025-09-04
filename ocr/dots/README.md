@@ -1,4 +1,4 @@
-# DOTS OCR
+# [dots.ocr](https://github.com/rednote-hilab/dots.ocr)
 ## Overview
 This OCR pipeline converts PDF documents to text using the DOTS OCR model, a specialized 1.7B parameter model for optical character recognition that preserves document layout and structure while handling complex formatting elements.
 

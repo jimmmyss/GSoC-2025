@@ -1,4 +1,4 @@
-# Qwen2.5-VL OCR
+# [Qwen-VL](https://github.com/QwenLM/Qwen-VL)
 
 ## Overview
 This OCR pipeline converts PDF documents to text using the Qwen2.5-VL-3B-Instruct vision-language model, which can read and understand text in images including Greek and English text while preserving original formatting and structure.

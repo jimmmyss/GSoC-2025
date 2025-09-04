@@ -1,4 +1,4 @@
-# Nanonets OCR
+# [NanoNets](https://github.com/NanoNets/docext)
 ## Overview
 This OCR pipeline converts PDF documents to text using the Nanonets-OCR-s model from Hugging Face, which specializes in document understanding and can extract text while preserving formatting, handling mathematical expressions, tables, and other document elements.
 

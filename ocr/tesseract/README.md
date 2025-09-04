@@ -1,4 +1,4 @@
-# Tesseract
+# [tesseract](https://github.com/tesseract-ocr/tesseract)
 
 ## Overview
 
