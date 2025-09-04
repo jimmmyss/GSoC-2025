@@ -15,9 +15,6 @@ Project HuggingFace:  [https://huggingface.co/glossAPI](https://huggingface.co/g
 
 GSoC Page:  [https://summerofcode.withgoogle.com/programs/2025/projects/WaioHmfG](https://summerofcode.withgoogle.com/programs/2025/projects/WaioHmfG)
 
-GSoC GitHub:  [https://github.com/jimmmyss/GSoC-2025](https://github.com/jimmmyss/GSoC-2025)
-
-
 ##  Abstract
 
 This project addresses the lack of accessible, Greek high-quality datasets for training Large Language Models (LLMs). Although robust LLM frameworks are widely available, open-source Greek-specific datasets are severely underrepresented, especially those that captures regional variations and dialects. This project's mission is to integrate Optical Character Recognition (OCR) capabilities into the processing pipeline and expand its dataset resources to support these linguistic nuances.
