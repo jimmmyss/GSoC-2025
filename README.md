@@ -111,21 +111,21 @@ This step begins by scanning all of the URLs and page contents from the datasets
 
 The objective was to find the most accurate OCR solution for processing Greek text, that will then be incorporated inside of the GlossAPI pipeline.
 
-**1. TesseractOCR**
+**1. [tesseract](https://github.com/tesseract-ocr/tesseract)**
 
 The initial testing scores showed on average an 70-75% total accuracy score with most notable mistakes occuring in complex text contents such as mathematical formulas, tables, and structured documents. Errors also appeared in simpler text, particularly with unusual polytonic accents or occasional incorrect characters in words.
 
 To address this, a custom post-processing pipeline using Hunspell was developed. This pipeline first strips all accents from the text, then applies Greek spell checking to fix incorrect characters and reapply the correct accents. Additionally, the Tesseract model was trained using in-house data from scrapped PDFs, consisting of paired image files (.tif) and their corresponding ground-truth text files (.gt.txt). With this approach, accuracy improved to over 90% for standard text, though complex content such as mathematical formulas and structured tables remained challenging.
 
-**2. PaddleOCR** 
+**2. [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR)** 
 
 The initial testing showed a similar average accuracy of 65-70%, with frequent misrecognition of accented characters and polytonic text. While paragraph structure and basic Greek characters were generally preserved, there were instances where entire lines were completely garbled or nonsensical. Compared to Tesseract, PaddleOCR handled noisy or varied fonts slightly better, but it struggled to maintain character-level accuracy and proper accents. Additionally, PaddleOCR is more resource-intensive than Tesseract, as it relies on deep learning models that require more memory and processing power, and it is generally slower on CPU, though GPU inference can speed up batch processing.
 
 To address common recognition errors, a custom post-processing pipeline similar to the one used for Tesseract was developed. This pipeline strips all accents from the text, applies Greek spell checking using Hunspell to correct incorrect characters and reapply the correct accents. Unlike Tesseract, no additional custom training was performed for PaddleOCR at this stage. With this approach, accuracy improved for standard text to 70-75%, though there were still instances of garbled lines. Further training is required to optimize performance for Greek text and effectively eliminate these garbled lines.
 
-**3. Qwen-VL**
+**3. [dots.ocr](https://github.com/rednote-hilab/dots.ocr)**
 
-The results of the evaluation showed excellent performance on both simple and complex documents, achieving accuracy scores of up to 98% in many instances. Unlike Tesseract and PaddleOCR, Qwen-VL was able to process mathematical formulas, structured tables, and dense academic content with very high reliability, while also being capable of producing LaTeX representations of equations, making it significantly more effective than the other OCR pipelines.
+The results of the evaluation showed excellent performance on both simple and complex documents, achieving accuracy scores of up to 98% in many instances. Unlike Tesseract and PaddleOCR, dots.ocr was able to process mathematical formulas, structured tables, and dense academic content with very high reliability, while also being capable of producing LaTeX representations of equations, making it significantly more effective than the other OCR pipelines.
 
 The main drawback is its computational cost. While Tesseract and PaddleOCR can run efficiently on CPUs or lightweight GPUs (<1 GB VRAM), Qwen-VL requires a modern high-memory GPU (15–40 GB VRAM) and noticeably longer processing times. As GlossAPI is intended for accessibility by the average user rather than being limited to power users with high-end hardware only it was chosen not to be integrated into the GlossAPI pipeline.
 
