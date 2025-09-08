@@ -1,4 +1,4 @@
-
+#[RapidOCR](https://github.com/RapidAI/RapidOCR) & [https://github.com/onnx/onnx])(onnx)
 
 ## Overview
 
@@ -12,8 +12,6 @@ This OCR pipeline converts PDF documents to structured text using Docling's adva
 ## In-Depth Processing
 
 ### Preprocessing
-
-The document preprocessing pipeline maximizes OCR accuracy through advanced layout understanding:
 
 **Layout Analysis:**
 - GPU-accelerated document structure detection using Docling's deep learning models
@@ -33,8 +31,6 @@ The document preprocessing pipeline maximizes OCR accuracy through advanced layo
 - Configurable confidence thresholds (default 0.50) for quality control
 
 ### Post-Processing
-
-The post-processing stage ensures high-quality structured output:
 
 **Content Structure Preservation:**
 - Maintains document hierarchy and reading order from layout analysis
