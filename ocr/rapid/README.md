@@ -1,4 +1,4 @@
-# [RapidOCR](https://github.com/RapidAI/RapidOCR) & [https://github.com/onnx/onnx])(onnx)
+# [RapidOCR](https://github.com/RapidAI/RapidOCR) & [onnx](https://github.com/onnx/onnx)
 
 ## Overview
 
