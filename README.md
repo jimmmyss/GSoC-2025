@@ -30,7 +30,7 @@ During the time of the program, i also played a key role in the development of [
 ### Dataset
 - Analyzed [Oscar](https://oscar-project.org/) and [HPLT](https://hplt-project.org/datasets/v2.0) datasets (Approx. 700GB).
 - Scraped, extracted and processed [Greek](https://search.et.gr/) and [European](https://eur-lex.europa.eu/) legislations (Approx. 3GB).
-- Scraped, extracted and processed [OpenArchives](https://www.openarchives.gr/) and [OpenBooks](https://www.openbook.gr/) (Approx. GB).
+- Scraped, extracted and processed [OpenArchives](https://www.openarchives.gr/) and [OpenBooks](https://www.openbook.gr/) (Approx. 300GB).
 
 ### OCR
 - Created and tested multiple OCR (Optical Character Recognition) pipelines using [Tesseract](https://github.com/tesseract-ocr/tesseract), [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR) and [RapidOCR](https://github.com/RapidAI/RapidOCR) with [onnx](https://github.com/onnx/onnx) for simple text extraction.
