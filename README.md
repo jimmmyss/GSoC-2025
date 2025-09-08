@@ -33,7 +33,7 @@ During the time of the program, i also played a key role in the development of [
 - Scraped, extracted and processed [OpenArchives](https://www.openarchives.gr/) and [OpenBooks](https://www.openbook.gr/) (Approx. GB).
 
 ### OCR
-- Created and tested multiple OCR (Optical Character Recognition) pipelines using [Tesseract](https://github.com/tesseract-ocr/tesseract) and [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR) for simple text extraction.
+- Created and tested multiple OCR (Optical Character Recognition) pipelines using [Tesseract](https://github.com/tesseract-ocr/tesseract), [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR) and [RapidOCR](https://github.com/RapidAI/RapidOCR) with [onnx](https://github.com/onnx/onnx) for simple text extraction.
 - Evaluated [Qwen-VL](https://github.com/QwenLM/Qwen-VL), [dots.ocr](https://github.com/rednote-hilab/dots.ocr), [NanoNets](https://github.com/NanoNets/docext) VLM (Vision-Language Model) pipeline for complex text extraction.
 - Developed a custom post-processing pipeline for spell and grammar checking using [Hunspell](https://github.com/hunspell/hunspell).
 
