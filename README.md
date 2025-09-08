@@ -149,4 +149,4 @@ The project still has a long way to go before it is ready for mass adoption and 
 
 ## Final Note 
 
-Thank you to [Google Summer of Code 2025](https://summerofcode.withgoogle.com/) and [Open Technologies Alliance - Gfoss](https://gfoss.eu/) for providing me with the opportunity to contribute to GlossAPI. I am deeply grateful for this expirience and to my mentors, Foivos and Nikos, for their guidance and support. The project has given me truly valuable insights into new technologies and methodologies, and I look forward to staying connected with the community and continuing to contribute to GlossAPI.
+Thank you [Google Summer of Code 2025](https://summerofcode.withgoogle.com/) and [Open Technologies Alliance - Gfoss](https://gfoss.eu/) for providing me with the opportunity to contribute to GlossAPI. I am deeply grateful for this expirience and to my mentors, Foivos and Nikos, for their guidance and support. The project has given me truly valuable insights into new technologies and methodologies, and I look forward to staying connected with the community and continuing to contribute to GlossAPI.
