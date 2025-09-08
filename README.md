@@ -120,7 +120,14 @@ The initial testing showed a similar average accuracy of 65-70%, with frequent m
 
 To address common recognition errors, a custom post-processing pipeline similar to the one used for Tesseract was developed. This pipeline strips all accents from the text, applies Greek spell checking using Hunspell to correct incorrect characters and reapply the correct accents. Unlike Tesseract, no additional custom training was performed for PaddleOCR at this stage. With this approach, accuracy improved for standard text to 70-75%, though there were still instances of garbled lines. Further training is required to optimize performance for Greek text and effectively eliminate these garbled lines.
 
-**3. [Qwen-VL](https://github.com/QwenLM/Qwen-VL), [dots.ocr](https://github.com/rednote-hilab/dots.ocr), [NanoNets](https://github.com/NanoNets/docext)**
+**3. [RapidOCR](https://github.com/RapidAI/RapidOCR) & [onnx](https://github.com/onnx/onnx)**
+
+The initial testing demonstrated similar accuracy of 70–75% to PaddleOCR, with slightly better handling of noisy text and significantly fewer garbled or nonsensical line outputs. While it still struggled with accented Greek characters and polytonic text, the overall results were more stable and consistent compared to PaddleOCR alone.
+A key advantage of RapidOCR is its compatibility with Docling, which is what's used by GlossAPI for PDF parsing and text extraction. 
+
+Like PaddleOCR, no additional fine-tuning was performed at this stage. However, the ONNX optimization means that RapidOCR can run more efficiently, with potential for GPU acceleration when available.
+
+**4. [Qwen-VL](https://github.com/QwenLM/Qwen-VL), [dots.ocr](https://github.com/rednote-hilab/dots.ocr), [NanoNets](https://github.com/NanoNets/docext)**
 
 The results of these evaluations showed excellent performance on both simple and complex documents, achieving accuracy scores of up to 98% in many instances. Unlike Tesseract and PaddleOCR, these VLMs was able to process mathematical formulas, structured tables, and dense academic content with very high reliability, while also being capable of producing LaTeX representations of equations, making it significantly more effective than the other OCR pipelines.
 
@@ -128,7 +135,8 @@ The main drawback is its computational cost. While Tesseract and PaddleOCR can r
 
 **Conclusion**
 
-After evaluating all approaches, the project selected a combination of Docling with RapidOCR (ONNX, Greek) as the optimal solution for GlossAPI’s OCR requirements. Since RapidOCR is built on top of PaddleOCR, which demonstrated strong potential when trained, it was concluded to be the most promising option for long-term adoption.
+After evaluating all approaches, the project selected the [RapidOCR](https://github.com/RapidAI/RapidOCR) & [onnx](https://github.com/onnx/onnx) approach as the optimal solution for GlossAPI’s OCR requirements. RapidOCR, built on top of PaddleOCR, showed strong potential when trained and offered more stable results with fewer errors. Furthermore, because Docling natively supports RapidOCR as one of its built-in OCR engines, integration into the existing GlossAPI pipeline was straightforward. This combination reduces engineering overhead while improving reliability, making RapidOCR the most promising option for long-term adoption.
+
 
 ## Future Work
 
@@ -139,13 +147,6 @@ The project still has a long way to go before it is ready for mass adoption and 
 3. **Selective VLM support for Complex Texts** – Use Vision-Language Models exclusively for complex documents so that standard texts are processed efficiently without heavy resource usage.
 4. **Consistent Accuracy** – Achieve and maintain a high OCR accuracy scores of over 90% across diverse document types.
 
-## Thanks note
-This project is supported by the Google Summer of Code program and the Open Technologies Alliance - Gfoss organization. I would like to extend my sincere thanks to my mentors, Foivos and Nikos, for his invaluable guidance throughout the project, covering areas such as implementation, code review, and community involvement. Additionally, I am grateful to the organization for providing me with the opportunity to work on this project. It was an absolute pleasure working with you and I will try to stay connected with the community in the future!
+## Final Note 
 
-In conclusion, the development of the GlossAPI as part of Google Summer of Code 2025 has been an enriching and transformative experience. The project successfully introduced a range of advanced features and enhancements designed to improve the educational experience for users. The integration of interactive simulations, improved code, and a more intuitive user interface has significantly contributed to the platform's functionality and user experience.
-
-Throughout the project, I have gained valuable insights into new technologies and methodologies, honed my problem-solving skills, and expanded my expertise in AI practices. Collaborating with a large organization and engaging with the broader community has been incredibly rewarding, both professionally and personally.
-
-. The journey has been fulfilling, and the opportunity to contribute to educational technology has been particularly gratifying. I look forward to staying connected with the community and continuing to support the platform's development in the future.
-
-Thank you once again to everyone who supported and guided me throughout this project. Your contributions and encouragement have made this experience truly memorable.
+Thank you to the [Google Summer of Code 2025](https://summerofcode.withgoogle.com/) program and [Open Technologies Alliance - Gfoss](https://gfoss.eu/) for providing me with the opportunity to contribute to GlossAPI. I am deeply grateful for this expirience and to my mentors, Foivos and Nikos, for their guidance and support. The project has given me truly valuable insights into new technologies and methodologies, and I look forward to staying connected with the community and continuing to contribute to GlossAPI.
