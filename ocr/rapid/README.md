@@ -1,121 +1,205 @@
-# Greek PDF OCR with Docling + RapidOCR
+
 
 ## Overview
 
-This OCR pipeline converts Greek academic PDFs to structured text using Docling's layout analysis combined with RapidOCR's ONNX runtime for high-accuracy Greek text recognition. The tool performs sophisticated document processing with GPU acceleration:
+This OCR pipeline converts PDF documents to structured text using Docling's advanced layout analysis combined with RapidOCR's ONNX-based OCR engine, specifically optimized for Greek and English academic documents. The tool performs four main operations:
 
-1. **Layout Analysis** - Uses Docling's deep learning models to understand document structure
-2. **Greek OCR Processing** - Employs PP-OCRv5 ONNX models specifically trained for Greek text
-3. **Text Normalization** - Applies Unicode normalization and cleanup for mathematical content
-4. **Structured Export** - Outputs both Markdown and JSON formats with preserved structure
+1. **Document Layout Analysis** - Uses Docling's GPU-accelerated models to detect and classify document elements (text blocks, tables, formulas, etc.)
+2. **Advanced OCR Processing** - Employs RapidOCR with PP-OCRv5 Greek models via ONNX Runtime for high-accuracy text extraction
+3. **Formula & Code Enrichment** - Optional mathematical formula and code block recognition using specialized neural models
+4. **Multi-Format Export** - Outputs both structured Markdown and detailed JSON with comprehensive metadata
 
-## Processing Pipeline
+## In-Depth Processing
 
-### Document Analysis
+### Preprocessing
 
-**Layout Detection:**
-- GPU-accelerated deep learning models for document layout understanding
-- Identifies text blocks, headers, tables, formulas, and code sections
-- Preserves reading order and hierarchical structure
-- Handles complex multi-column academic layouts
+The document preprocessing pipeline maximizes OCR accuracy through advanced layout understanding:
 
-**OCR Processing:**
-- Forces full-page OCR (ignores embedded PDF text for consistency)
-- Uses PP-OCRv5 Greek recognition models via ONNX runtime
-- Supports both Greek (el) and English (en) languages simultaneously
-- Applies configurable image scaling (default 1.25x) for improved recognition
-- Implements text orientation classification for rotated content
+**Layout Analysis:**
+- GPU-accelerated document structure detection using Docling's deep learning models
+- Intelligent text region identification and classification
+- Table structure recognition with TableFormer models
+- Automatic reading order determination for complex layouts
 
-### Advanced Features
+**Image Enhancement:**
+- Configurable raster scaling (default 1.25x) before OCR to sharpen thin glyphs
+- Automatic orientation detection and correction using classification models
+- Optimized preprocessing specifically for math-heavy Greek academic content
 
-**Formula Recognition (Optional):**
-- Integrates Docling's CodeFormula model for mathematical expressions
-- GPU-accelerated formula parsing and LaTeX conversion
-- Configurable batch processing for performance optimization
+**Text Detection & Recognition:**
+- PP-OCRv5 detection model for precise text region localization
+- Greek-specific PP-OCRv5 recognition model with custom character dictionary
+- Dual-language support (Greek + English) with automatic language detection
+- Configurable confidence thresholds (default 0.50) for quality control
 
-**Text Normalization:**
-- Unicode NFC normalization for consistent character representation
-- Removes zero-width characters and formatting artifacts
-- Handles complex Greek polytonic and mathematical Unicode ranges
+### Post-Processing
+
+The post-processing stage ensures high-quality structured output:
+
+**Content Structure Preservation:**
+- Maintains document hierarchy and reading order from layout analysis
+- Preserves table structures with cell-level accuracy
+- Handles complex multi-column layouts common in academic papers
+
+**Mathematical Content Processing:**
+- Optional CodeFormula model for LaTeX mathematical expression recognition
+- Specialized processing for Greek mathematical notation and symbols
+- Formula truncation and sanitization to prevent excessive whitespace runs
+
+**Unicode Normalization:**
+- NFC normalization for stable Unicode representation
+- Zero-width character removal (ZWSP, ZWNJ, ZWD, BOM)
+- Consistent handling of Greek diacritics and mathematical symbols
 
 ## Output
 
-The tool produces comprehensive output files:
+This tool processes academic PDFs and produces comprehensive output files optimized for analysis and further processing:
 
-1. **Structured Markdown** (`{filename}.md`) - Clean, readable text with preserved structure
-2. **Structured JSON** (`{filename}.json`) - Complete document data with metadata
-3. **Processing Metrics** (`{filename}.metrics.json`) - Detailed timing information
-4. **Per-Page Metrics** (`{filename}.per_page.metrics.json`) - Page-by-page statistics
+1. **Structured Markdown** (`{filename}.md`)  
+   Clean, hierarchically organized text preserving document structure, tables, and reading order
+
+2. **Detailed JSON** (`{filename}.json`)  
+   Complete document metadata including bounding boxes, confidence scores, and element classifications
+
+3. **Performance Metrics** (`{filename}.metrics.json`)  
+   Detailed timing analysis for each processing stage (OCR, layout, parsing, enrichment)
+
+4. **Per-Page Analytics** (`{filename}.per_page.metrics.json`)  
+   Page-level breakdown including formula counts, processing times, and content statistics
 
 ## Installation and Setup
 
 ### Prerequisites
 
 **System Requirements:**
-- NVIDIA GPU with CUDA support (required)
-- CUDA-compatible drivers and runtime
-- Python 3.8+ with pip
+- NVIDIA GPU with CUDA support (required for optimal performance)
+- CUDA-compatible drivers (NVIDIA 470+ recommended)
+- Python 3.10+ 
 
-**Dependencies:**
+**Core Dependencies:**
 ```bash
-pip install -r requirements.txt
+pip install docling[rapidocr]==2.48.0
+pip install rapidocr_onnxruntime==1.4.4
+pip install onnxruntime-gpu==1.18.1
+pip install "numpy<2"
+pip install pyyaml>=6.0
+pip install tqdm>=4.67
 ```
 
-### Required Model Files
+**Important:** Ensure only `onnxruntime-gpu` is installed, not the CPU version:
+```bash
+pip uninstall -y onnxruntime  # Remove CPU version if present
+```
 
-You need these ONNX models:
+**ONNX Model Files Required:**
+You need three ONNX models for the pipeline:
+- **Detection Model**: PP-OCRv5 detection ONNX (`inference.onnx`)
+- **Recognition Model**: PP-OCRv5 Greek recognition ONNX (`inference.onnx`) 
+- **Classification Model**: Text orientation classifier (auto-located from RapidOCR installation)
 
-1. **Detection Model** - PP-OCRv5 text detection (`inference.onnx`)
-2. **Recognition Model** - PP-OCRv5 Greek text recognition (`inference.onnx`) 
-3. **Classification Model** - Text orientation classifier (`ch_ppocr_mobile_v2.0_cls_infer.onnx`)
-4. **Recognition Keys** - Greek character dictionary (`greek_ppocrv5_keys.txt`)
+**Greek Character Dictionary:**
+Generate from your Greek Paddle model's `inference.yml`:
+```bash
+python scripts/extract_keys.py --in-yml /path/to/inference.yml --out greek_keys.txt
+```
 
-## How to Run
+### Critical Setup Step: Docling Patch
+
+Due to a parameter mapping issue in Docling 2.48.0, apply this one-line patch:
+
+**Location:** `.venv/lib/python3.10/site-packages/docling/models/rapid_ocr_model.py`  
+**Change:** Line containing `"Rec.keys_path"` → `"Rec.rec_keys_path"`
+
+Or use the automated patch script:
+```bash
+bash scripts/repatch_docling.sh
+```
+
+### Verification
+
+**Check GPU Providers:**
+```bash
+python -c "import onnxruntime as ort; print('CUDAExecutionProvider' in ort.get_available_providers())"
+```
+
+## How to Run the OCR
 
 ### Basic Usage
 
+**Process PDFs with ONNX backend:**
 ```bash
-python greek_pdf_ocr.py INPUT_DIR OUTPUT_DIR \
-  --onnx-det /path/to/det_onnx/inference.onnx \
-  --onnx-rec /path/to/rec_onnx/inference.onnx \
-  --onnx-cls /path/to/cls/ch_ppocr_mobile_v2.0_cls_infer.onnx \
-  --rec-keys /path/to/greek_ppocrv5_keys.txt
+python rapid.py input_pdfs/ output_dir/ \
+  --onnx-det path/to/det/inference.onnx \
+  --onnx-rec path/to/rec/inference.onnx \
+  --onnx-cls path/to/cls/inference.onnx \
+  --rec-keys path/to/greek_keys.txt
 ```
 
-### Using the Convenience Script
+### Advanced Options
 
+**GPU Configuration:**
 ```bash
-./scripts/run_onnx.sh \
-  --det /path/to/det_onnx/inference.onnx \
-  --rec /path/to/rec_onnx/inference.onnx \
-  --keys /path/to/greek_ppocrv5_keys.txt \
-  --in /path/to/pdf/directory \
-  --out /path/to/output/directory
+python rapid.py input_pdfs/ output_dir/ \
+  --device cuda:0 \
+  --onnx-det det/inference.onnx \
+  --onnx-rec rec/inference.onnx \
+  --onnx-cls cls/inference.onnx \
+  --rec-keys greek_keys.txt
 ```
 
-### Configuration Options
+**Quality and Performance Tuning:**
+```bash
+python rapid.py input_pdfs/ output_dir/ \
+  --text-score 0.45 \
+  --images-scale 1.5 \
+  --no-force-ocr \
+  --normalize-output \
+  --onnx-det det/inference.onnx \
+  --onnx-rec rec/inference.onnx \
+  --onnx-cls cls/inference.onnx \
+  --rec-keys greek_keys.txt
+```
 
-| Option | Default | Description |
-|--------|---------|-------------|
-| `--device` | `cuda:0` | GPU device for processing |
-| `--text-score` | `0.50` | OCR confidence threshold |
-| `--images-scale` | `1.25` | Image scaling factor |
-| `--docling-formula` | `False` | Enable formula recognition |
-| `--normalize-output` | `True` | Apply Unicode normalization |
+**Mathematical Content Enhancement (Requires PyTorch CUDA):**
+```bash
+# First install PyTorch CUDA:
+pip install --index-url https://download.pytorch.org/whl/cu121 torch==2.5.1 torchvision==0.20.1
 
-## Files to Upload to GitHub
+# Then run with formula enrichment:
+python rapid.py input_pdfs/ output_dir/ \
+  --docling-formula \
+  --formula-batch 8 \
+  --docling-code \
+  --onnx-det det/inference.onnx \
+  --onnx-rec rec/inference.onnx \
+  --onnx-cls cls/inference.onnx \
+  --rec-keys greek_keys.txt
+```
 
-### Essential Files
-1. `greek_pdf_ocr.py` - Main OCR script
-2. `requirements.txt` - Python dependencies  
-3. `README.md` - This documentation
-4. `scripts/run_onnx.sh` - Convenience wrapper script
-5. `MODELS.md` - Model setup guide
+### Parameters Explained
 
-### Model Files (Consider Git LFS)
-6. `models/det_onnx/inference.onnx` - Detection model (~50-100MB)
-7. `models/rec_onnx/inference.onnx` - Greek recognition model (~50-100MB)
-8. `models/cls/ch_ppocr_mobile_v2.0_cls_infer.onnx` - Classifier (~10MB)
-9. `models/keys/greek_ppocrv5_keys.txt` - Character dictionary (~10KB)
+- `--device cuda:0` - Use GPU acceleration for layout analysis
+- `--text-score 0.45` - OCR confidence threshold (lower = more text detected)
+- `--images-scale 1.5` - Scale factor for better thin glyph recognition
+- `--no-force-ocr` - Use embedded PDF text when available, OCR only images
+- `--normalize-output` - Apply Unicode normalization for consistent output
+- `--docling-formula` - Enable mathematical formula recognition (GPU recommended)
+- `--formula-batch 8` - Batch size for formula processing (adjust based on GPU memory)
 
-**Note**: ONNX model files are large (50-200MB each). Consider using Git LFS or providing download instructions instead of direct repository inclusion.
+### Troubleshooting
+
+**"No class found 'rapidocr'" Error:**
+- Ensure `rapidocr_onnxruntime` is installed
+- Apply the Docling patch for parameter mapping
+- Check that ONNX models are accessible
+
+**GPU Provider Issues:**
+- Verify CUDA installation and drivers
+- Ensure only `onnxruntime-gpu` is installed (not CPU version)
+- Check GPU memory availability
+
+**Missing Dictionary Errors:**
+- Generate Greek keys file from Paddle inference.yml
+- Ensure the patch is applied so keys are properly passed to RapidOCR
+
+For detailed troubleshooting, refer to the documentation included with this distribution.
