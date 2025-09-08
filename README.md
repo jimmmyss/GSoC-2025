@@ -23,7 +23,7 @@ This project addresses the lack of accessible, Greek high-quality datasets for t
 
 The scope of this project was to analyze large pre-crawled datasets from Common Crawl, study their pipelines and entries, extract data that could serve as a valuable addition to the existing datasets, and incorporate OCR capabilities into the GlossAPI pipeline.
 
-During the time of the program, i also played a key role in the development of [glossapi.gr](https://glossapi.gr) site and discord server, including the development of a discord bot that is responsible for announcing and moderating text channels
+During the time of the program, i also played a key role in the development of [glossapi.gr](https://glossapi.gr) site and [discord server](https://discord.com/invite/TY69npdMwM), including the development of a discord bot that is responsible for announcing and moderating text channels
 
 ## Deliverables
 
