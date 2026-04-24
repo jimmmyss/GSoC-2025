@@ -122,7 +122,7 @@ To address common recognition errors, a custom post-processing pipeline similar 
 
 **3. [RapidOCR](https://github.com/RapidAI/RapidOCR) & [onnx](https://github.com/onnx/onnx)**
 
-The initial testing demonstrated similar accuracy of 70–75% to PaddleOCR, with slightly better handling of noisy text and significantly fewer garbled or nonsensical line outputs. While it still struggled with accented Greek characters and polytonic text, the overall results were more stable and consistent compared to PaddleOCR alone.
+The initial testing demonstrated similar accuracy of 70-75% to PaddleOCR, with slightly better handling of noisy text and significantly fewer garbled or nonsensical line outputs. While it still struggled with accented Greek characters and polytonic text, the overall results were more stable and consistent compared to PaddleOCR alone.
 A key advantage of RapidOCR is its compatibility with Docling, which is what's used by GlossAPI for PDF parsing and text extraction. 
 
 Like PaddleOCR, no additional fine-tuning was performed at this stage. However, the ONNX optimization means that RapidOCR can run more efficiently, with potential for GPU acceleration when available.
@@ -131,7 +131,7 @@ Like PaddleOCR, no additional fine-tuning was performed at this stage. However, 
 
 The results of these evaluations showed excellent performance on both simple and complex documents, achieving accuracy scores of up to 98% in many instances. Unlike Tesseract and PaddleOCR, these VLMs was able to process mathematical formulas, structured tables, and dense academic content with very high reliability, while also being capable of producing LaTeX representations of equations, making it significantly more effective than the other OCR pipelines.
 
-The main drawback is its computational cost. While Tesseract and PaddleOCR can run efficiently on CPUs or lightweight GPUs (<1 GB VRAM), VLMs requires a modern high-memory GPU (15–40 GB VRAM) and noticeably longer processing times. As GlossAPI is intended for accessibility by the average user rather than being limited to power users with high-end hardware only it was chosen not to be integrated into the GlossAPI pipeline.
+The main drawback is its computational cost. While Tesseract and PaddleOCR can run efficiently on CPUs or lightweight GPUs (<1 GB VRAM), VLMs requires a modern high-memory GPU (15-40 GB VRAM) and noticeably longer processing times. As GlossAPI is intended for accessibility by the average user rather than being limited to power users with high-end hardware only it was chosen not to be integrated into the GlossAPI pipeline.
 
 **Conclusion**
 
@@ -142,10 +142,10 @@ After evaluating all approaches, the project selected the [RapidOCR](https://git
 
 The project still has a long way to go before it is ready for mass adoption and capable of handling all types of PDFs. In the near future, I plan to focus on the following improvements:
 
-1. **Expanding Dataset Sources** – Incorporate additional high-quality Greek texts from academic, legal, and public resources to improve coverage.
-2. **Pipeline Optimization** – Streamline the entire processing pipeline to maximize efficiency and reduce resource usage.
-3. **Selective VLM support for Complex Texts** – Use Vision-Language Models exclusively for complex documents so that standard texts are processed efficiently without heavy resource usage.
-4. **Consistent Accuracy** – Achieve and maintain a high OCR accuracy scores of over 90% across diverse document types.
+1. **Expanding Dataset Sources** - Incorporate additional high-quality Greek texts from academic, legal, and public resources to improve coverage.
+2. **Pipeline Optimization** - Streamline the entire processing pipeline to maximize efficiency and reduce resource usage.
+3. **Selective VLM support for Complex Texts** - Use Vision-Language Models exclusively for complex documents so that standard texts are processed efficiently without heavy resource usage.
+4. **Consistent Accuracy** - Achieve and maintain a high OCR accuracy scores of over 90% across diverse document types.
 
 ## Final Note 
 
