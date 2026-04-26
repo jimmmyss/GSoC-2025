@@ -19,22 +19,23 @@ GSoC Page:  [https://summerofcode.withgoogle.com/programs/2025/projects/WaioHmfG
 
 This project addresses the lack of accessible, Greek high-quality datasets for training Large Language Models (LLMs). Although robust LLM frameworks are widely available, open-source Greek-specific datasets are severely underrepresented, especially those that captures regional variations and dialects. This project's mission is to integrate Optical Character Recognition (OCR) capabilities into the processing pipeline and expand its dataset resources to support these linguistic nuances.
 
+A significant part of the project was experimental and evaluative. The work focused on assessing different datasets, processing methods, OCR and VLM engines, to try to understand which tools were accurate, scalable, practical and logical enough to be integrated into GlossAPI.
+
 ## Work and Repository
 
-The scope of this project was to analyze large pre-crawled datasets from Common Crawl, study their pipelines and entries, extract data that could serve as a valuable addition to the existing datasets, and incorporate OCR capabilities into the GlossAPI pipeline.
+The scope of this project was first to analyze large pre-crawled Common Crawl datasets and extract data that could serve as a valuable addition to the existing datasets, and second to evaluate and incorporate OCR and VLM capabilities into GlossAPI.
 
-During the time of the program, i also played a key role in the development of [glossapi.gr](https://glossapi.gr) site and [discord server](https://discord.com/invite/TY69npdMwM), including the development of a discord bot that is responsible for announcing and moderating text channels
+During the time of the program, i also played a key role in the development of [glossapi.gr](https://glossapi.gr) site and [discord server](https://discord.com/invite/TY69npdMwM), together with a discord bot that is responsible for announcing and moderating text channels.
 
 ## Deliverables
 
 ### Dataset
-- Analyzed [Oscar](https://oscar-project.org/) and [HPLT](https://hplt-project.org/datasets/v2.0) datasets (Approx. 700GB).
-- Scraped, extracted and processed [Greek](https://search.et.gr/) and [European](https://eur-lex.europa.eu/) legislations (Approx. 3GB).
-- Scraped, extracted and processed [OpenArchives](https://www.openarchives.gr/) and [OpenBooks](https://www.openbook.gr/) (Approx. 300GB).
+- Analyzed and classified domain specific entries of [Oscar](https://oscar-project.org/) and [HPLT](https://hplt-project.org/datasets/v2.0) datasets.
+- Scraped, extracted and processed [Greek](https://search.et.gr/), [European](https://eur-lex.europa.eu/) legislations, [OpenArchives](https://www.openarchives.gr/), [OpenBooks](https://www.openbook.gr/) & [Internet Archive](https://archive.org/) (Approx 1.5TB).
 
 ### OCR
-- Created and tested multiple OCR (Optical Character Recognition) pipelines using [Tesseract](https://github.com/tesseract-ocr/tesseract), [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR) and [RapidOCR](https://github.com/RapidAI/RapidOCR) with [onnx](https://github.com/onnx/onnx) for simple text extraction.
-- Evaluated [Qwen-VL](https://github.com/QwenLM/Qwen-VL), [dots.ocr](https://github.com/rednote-hilab/dots.ocr), [NanoNets](https://github.com/NanoNets/docext) VLM (Vision-Language Model) pipeline for complex text extraction.
+- Evaluated [Tesseract](https://github.com/tesseract-ocr/tesseract), [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR) and [RapidOCR](https://github.com/RapidAI/RapidOCR) with [onnx](https://github.com/onnx/onnx) for simple text extraction.
+- Evaluated [Qwen-VL](https://github.com/QwenLM/Qwen-VL), [dots.ocr](https://github.com/rednote-hilab/dots.ocr), [NanoNets](https://github.com/NanoNets/docext) VLMs pipeline for complex text extraction.
 - Developed a custom post-processing pipeline for spell and grammar checking using [Hunspell](https://github.com/hunspell/hunspell).
 
 ### Discord
@@ -42,7 +43,7 @@ During the time of the program, i also played a key role in the development of [
 - Developed a custom Discord bot that is responsible for announcing and moderating text channels.
 
 ### Site
-- Contributed in the development of the official [GlossAPI landing page](https://glossapi.gr).
+- Developed the official [GlossAPI landing page](https://glossapi.gr).
 
 ## Key Takeaways
 
