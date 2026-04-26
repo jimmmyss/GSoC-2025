@@ -25,13 +25,13 @@ A significant part of the project was experimental and evaluative. The work focu
 
 The scope of this project was first to analyze large pre-crawled Common Crawl datasets and extract data that could serve as a valuable addition to the existing datasets, and second to evaluate and incorporate OCR and VLM capabilities into GlossAPI.
 
-During the time of the program, i also played a key role in the development of [glossapi.gr](https://glossapi.gr) site and [discord server](https://discord.com/invite/TY69npdMwM), together with a discord bot that is responsible for announcing and moderating text channels.
+During the time of the program, i also played a key role in the scrapping and processing of 5 major repositories and archives and converting the collected data into structured Parquet datasets, and the development of [glossapi.gr](https://glossapi.gr) site and [discord server](https://discord.com/invite/TY69npdMwM), together with a discord bot that is responsible for announcing and moderating text channels.
 
 ## Deliverables
 
 ### Dataset
 - Analyzed and classified domain specific entries of [Oscar](https://oscar-project.org/) and [HPLT](https://hplt-project.org/datasets/v2.0) datasets.
-- Scraped, extracted and processed [Greek](https://search.et.gr/), [European](https://eur-lex.europa.eu/) legislations, [OpenArchives](https://www.openarchives.gr/), [OpenBooks](https://www.openbook.gr/) & [Internet Archive](https://archive.org/) (Approx 1.5TB).
+- Scraped and processed [Greek](https://search.et.gr/), [European](https://eur-lex.europa.eu/) legislations, [OpenArchives](https://www.openarchives.gr/), [OpenBooks](https://www.openbook.gr/) & [Internet Archive](https://archive.org/) (Approx 1.5TB).
 
 ### OCR
 - Evaluated [Tesseract](https://github.com/tesseract-ocr/tesseract), [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR) and [RapidOCR](https://github.com/RapidAI/RapidOCR) with [onnx](https://github.com/onnx/onnx) for simple text extraction.
@@ -43,7 +43,7 @@ During the time of the program, i also played a key role in the development of [
 - Developed a custom Discord bot that is responsible for announcing and moderating text channels.
 
 ### Site
-- Developed the official [GlossAPI landing page](https://glossapi.gr).
+- Developed the official [GlossAPI](https://glossapi.gr) site.
 
 ## Key Takeaways
 
