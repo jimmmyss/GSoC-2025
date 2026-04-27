@@ -34,9 +34,9 @@ During the time of the program, i also played a key role in the scrapping and pr
 - Scraped and processed [Greek](https://search.et.gr/), [European](https://eur-lex.europa.eu/) legislations, [OpenArchives](https://www.openarchives.gr/), [OpenBooks](https://www.openbook.gr/) & [Internet Archive](https://archive.org/) (Approx 1.5TB).
 
 ### OCR
-- Evaluated [Tesseract](https://github.com/tesseract-ocr/tesseract), [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR) and [RapidOCR](https://github.com/RapidAI/RapidOCR) with [onnx](https://github.com/onnx/onnx) for simple text extraction.
-- Evaluated [Qwen-VL](https://github.com/QwenLM/Qwen-VL), [dots.ocr](https://github.com/rednote-hilab/dots.ocr), [NanoNets](https://github.com/NanoNets/docext) VLMs pipeline for complex text extraction.
-- Developed a custom post-processing pipeline for spell and grammar checking using [Hunspell](https://github.com/hunspell/hunspell).
+- Evaluated locally trained [Tesseract](https://github.com/tesseract-ocr/tesseract), [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR) and [RapidOCR](https://github.com/RapidAI/RapidOCR) for simple text extraction.
+- Developed a [custom spell-checking post-processing pipeline](https://github.com/jimmmyss/bilingual-spell-checker) for spell and grammar checking using [SymSpell](https://github.com/wolfgarbe/symspell).
+- Evaluated [Qwen2.5-VL]([https://github.com/QwenLM/Qwen-VL](https://github.com/QwenLM/Qwen2.5-VL)), [dots.ocr](https://github.com/rednote-hilab/dots.ocr), [NanoNets](https://github.com/NanoNets/docext) VLMs for complex text extraction.
 
 ### Discord
 - Created a [Discord Community Server](https://discord.com/invite/TY69npdMwM).
@@ -107,7 +107,7 @@ This step begins by scanning all of the URLs and page contents from the datasets
 
 ### OCR
 
-The objective was to find the most accurate OCR solution for processing Greek text, that will then be incorporated inside of the GlossAPI pipeline.
+The objective was to experimentally evaluate OCR and VLM-based document extraction approaches for Greek text, compare their accuracy, resource requirements, integration complexity and limitations in order to identify which technologies make sense for GlossAPI.
 
 **1. [tesseract](https://github.com/tesseract-ocr/tesseract)**
 
@@ -136,8 +136,9 @@ The main drawback is its computational cost. While Tesseract and PaddleOCR can r
 
 **Conclusion**
 
-After evaluating all approaches, the project selected the [RapidOCR](https://github.com/RapidAI/RapidOCR) & [onnx](https://github.com/onnx/onnx) approach as the optimal solution for GlossAPI’s OCR requirements. RapidOCR, built on top of PaddleOCR, showed strong potential when trained and offered more stable results with fewer errors. Furthermore, because Docling natively supports RapidOCR as one of its built-in OCR engines, integration into the existing GlossAPI pipeline was straightforward. This combination reduces engineering overhead while improving reliability, making RapidOCR the most promising option for long-term adoption.
-
+- After evaluating all approaches, the project selected the [RapidOCR](https://github.com/RapidAI/RapidOCR) approach as the optimal solution for GlossAPI’s OCR requirements. While RapidOCR, built on top of PaddleOCR, was not necessarily a fundamentally more accurate OCR model, it provided a lighter inference path because it run through ONNX Runtime without depending on the full PaddlePaddle framework, and better portability because it could be deployed across different execution environments and hardware backends more easily. Compared to Tesseract, RapidOCR also offered a more scalable path for large-scale document processing, as it can take advantage of GPU-accelerated inference, while Tesseract is primarily CPU-bound during normal OCR usage. Furthermore, because Docling natively supports RapidOCR as one of its built-in OCR engines, integration into the existing GlossAPI pipeline was more straightforward. This combination reduced engineering overhead and made RapidOCR the most practical option for long-term adoption.
+- The [custom spell-checking post-processing pipeline](https://github.com/jimmmyss/bilingual-spell-checker) was also evaluated but was not officially integrated into GlossAPI. Although it improved some OCR outputs by correcting common Greek and English recognition errors, tests on academic documents showed that many domain-specific terms, names and technical expressions were missing from the available dictionaries, and as a result, the spell checker sometimes “corrected” words that were already valid, which made it risky for scientific and academic text extraction. For this reason, it was kept as an experimental post-processing tool rather than being adopted as a default part of the GlossAPI pipeline.
+- Because of the hardware requirements and the expected user workflows, VLM-based OCR was concluded to be better suited as a separate backend rather than the default extraction path. Users who need VLM OCR are more likely to process large batches of complex PDFs and therefore require dedicated GPU resources, while users relying on the standard Docling pipeline are more likely to need lighter, general-purpose extraction. For that reason, the VLM approach was planned as an optional backend that users could explicitly select when accuracy on complex documents was more important than speed, cost, or hardware accessibility. Since this required a separate architectural integration and was not completed during the GSoC period, the implementation was left as future work. After GSoC concluded, [DeepSeek-OCR](https://github.com/deepseek-ai/DeepSeek-OCR) was released in October and was chosen as the more promising candidate for the future VLM-based backend.
 
 ## Future Work
 
