@@ -49,11 +49,13 @@ During the time of the program, i also played a key role in the scrapping and pr
 
 ### Dataset
 
-The analysis started with the idea of classifying and categorizing each domain based on the type of the site it was. We followed two different approaches to calculate the most effective one:
+The dataset work began as an experimental source-discovery pipeline for GlossAPI. The goal was to evaluate whether large pre-crawled Common Crawl datasets could be used to identify valuable Greek text sources. Instead of immediately extracting all available web text, the idea was to analyze which domains appeared in the datasets, how frequently they appeared and whether they could be categorized into useful source types.
 
-**1. Classification through metadata**
+The first stage extracted and aggregated distinct domains from the raw OSCAR and HPLT JSONL files into Parquet datasets. Each domain was counted based on how often it appeared in the corpus and then determined whether the extracted domains could be grouped into meaningful content categories. If the domains could be reliably classified, the results could help identify which parts of the crawl were more likely to contain useful Greek text sources. The following approaches were used to calculate this:
 
-This step required further analysis of the whole datasets and link aggregation based on the same domain. After creating a parquet that had all the domain entries and how many times a domain was inside the dataset, we had to scrape the following metadata for each domain:
+**1. Metadata-based classification**
+
+After aggregating the domains, the next step was to enrich them by scraping basic website metadata. For each domain, the pipeline attempted to collect the following:
 
 1. Redirect URL.
 2. HTTP `status_code` returned by the server.  
@@ -63,9 +65,15 @@ This step required further analysis of the whole datasets and link aggregation b
 6. Open Graph Metadata  
    - `og_title`  
    - `og_description`  
-   - `og_type`  
+   - `og_type`
 
-This process proved to be unoptimal due to the fact that scraping had to be done to almost 1.000.000 different domains from both datasets. Doing it in batches momenteraly solved the problem of getting stuck in this step and not being able to do further analysis, but after it was done for OSCAR, which was the smaller dataset, there seemed to be a large gap in the actual metadata. More specifically our analysis showed:
+This metadata was then used to classify each domain into a predefined set of content categories. Two classification approaches were tested: 
+
+- Local zero-shot classification using six embedding models that each voted on the most fitting category. It compared each domain’s metadata against predefined category descriptions and also used rule-based signals (category keywords, known domain patterns, TLDs).
+
+- Gemini-based classification using an externally hosted LLM API as a stronger reference method. It combined the available domain metadata into a prompt and asked Gemini to assign each domain to one of the same predefined content categories. Due to the cost and hardware requirements of running comparable LLMs locally, this approach relied on external APIs and could only be used as a reference point.
+
+Both approaches proved unreliable at scale (1.000.000+ domains) because for many domains, especially less popular ones, there were missing, weak, or generic metadata. More specifically our analysis showed:
 
 - The percentage of missing metadata for all the domains:
 
@@ -92,18 +100,29 @@ This process proved to be unoptimal due to the fact that scraping had to be done
 | title & og_title                         | 0.6%       |
 | description & og_description             | 0.0%       |
 
-The next step was to assign each domain to one of our predefined categories by analyzing either its metadata or its landing‐page content. For metadata‐based classification, we employed two approaches: an ensemble of six embedding models that each voted on the best category, and a separate pipeline powered by Gemini. For landing‐page classification, we fed the full HTML content into Gemini, which then determined the most appropriate category based on the page’s actual structure and text.
+At the end, the local embedding-based classifier was fast, but its predictions were strongly dependent on the available metadata, the rule-based signals and the predefined category descriptions. When metadata was missing or was generic, the model had very little reliable signal. Gemini produced more reasonable classifications, but it was not practical as a full-scale solution because of API limits, and could only be used as a reference point. Running comparable LLMs locally was also not feasible for this stage, because the required hardware would have made large-scale classification nonsensical.
 
-**2. Classification through landing page content:**
+**2. Landing-page classification:**
 
-This step begins by scanning all of the URLs and page contents from the datasets and then to filter out anything that isnt a landing page. After isolating each domain’s primary page and its full HTML content we load this curated dataset and apply  BERTopic analysis to generate and discover new concise, human-readable category labels. The results can be used to classify each domain. 
+Because metadata was incomplete, a second approach tested whether landing-page content could provide a stronger signal. The idea was to identify each domain’s main page, extract its visible text or HTML content, and classify the website based on the actual page structure and text rather than only metadata.
+
+This also proved unreliable because landing pages often contained navigation menus, cookie banners, marketing text, login pages, or generic descriptions that did not represent the valuable content deeper inside the site. Many websites were also difficult to fetch consistently because of redirects, dynamic rendering, blocking, missing pages etc. In practice, useful classification of landing-page content required an LLM such as Gemini, but applying an external API to the full dataset was not feasible at this scale.
+
+**3. Unsupervised topic analysis:**
+
+In addition to predefined classification, BERTopic analysis was tested to see whether new useful categories could be discovered automatically from the data. This approach used multilingual sentence embeddings, UMAP dimensionality reduction, HDBSCAN clustering, and BERTopic keyword extraction to group similar domains or metadata entries without predefined labels.
+
+The results did not produce meaningful or actionable categories. The available text signal was too sparse and noisy, especially when based only on domain names, titles, and meta descriptions. Landing-page content also lacked coherent subject matter and often reflected generic website structure rather than useful source content. As a result, the discovered topics were difficult or impossible to interpret and did not provide a reliable way to identify high-quality data sources.
 
 **Conclusion**
-- The categorization with local embedding models, despite being fast proved to be unreliable, especially in domains that lacked metadata.
-- The categorization with Gemini, proved to be more reliable, but it can only be used for reference because of its API limits.
-- The BERTopic analysis proved to be "nonsensical" because the landing page content lacked coherent subject matter.
-- The Common Crawl extraction was discontinued after we found no high-quality crawls for the filtered-out entries.
-- The analysis showed that it is more beneficial to focus on academic papers and open books, since open web data is already widely available and well-covered.
+- The Common Crawl domain-classification approach was ultimately dropped because it did not provide reliable practical value for the GlossAPI pipeline.
+- Metadata-based classification was limited by missing and low-quality metadata, especially for less popular domains.
+- Local embedding-based classification was fast, but too dependent on predefined category descriptions and rule-based signals.
+- Gemini-based classification was more reliable, but not scalable because of API limits and could only be used as a refernce point.
+- Local LLMs were not an option because of hardware constraints.
+- Landing-page classification did not solve the problem, because homepages often contained generic or navigation-heavy content that did not represent the useful text available on the site.
+- BERTopic-based unsupervised analysis failed to produce meaningful categories because the input text was too sparse, generic, and noisy.
+- The main outcome of this experiment was the conclusion that broad Common Crawl extraction was not a good path for GlossAPI. Since open web data is already widely available and well-covered curated sources with PDFs were more valuable for building high-quality Greek datasets.
 
 ### OCR
 
