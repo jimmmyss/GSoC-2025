@@ -125,11 +125,9 @@ The initial testing demonstrated identical results to PaddleOCR, with comparable
 
 **4. [Qwen2.5-VL](https://github.com/QwenLM/Qwen2.5-VL), [dots.ocr](https://github.com/rednote-hilab/dots.ocr), [NanoNets](https://github.com/NanoNets/docext)**
 
-The results of these evaluations showed excellent performance on both simple and complex documents, achieving accuracy scores of up to 100% in many instances. 
+The results of these evaluations showed excellent performance on both simple and complex documents, achieving accuracy scores of up to 100% in simpler documents. Qwen2.5-VL was evaluated as a general-purpose multilingual vision-language baseline, NanoNets-OCR-s and dots.ocr as a multilingual document parsing model. In practice, the recognition quality across these models was very strong, and the real differences were in output structure, formatting consistency, model cost, and deployment requirements. Qwen2.5-VL was slightly heavier to run, while NanoNets-OCR-s and dots.ocr were more directly focused on structured document parsing.
 
-Unlike Tesseract and PaddleOCR, these VLMs was able to process mathematical formulas, structured tables, and dense academic content with very high reliability, while also being capable of producing LaTeX representations of equations, making it significantly more effective than the other OCR pipelines.
-
-The main drawback is its computational cost. While Tesseract and PaddleOCR can run efficiently on CPUs or lightweight GPUs (<1 GB VRAM), VLMs requires a modern high-memory GPU (15-40 GB VRAM) and noticeably longer processing times. As GlossAPI is intended for accessibility by the average user rather than being limited to power users with high-end hardware only it was chosen not to be integrated into the GlossAPI pipeline.
+The main drawback was that VLM OCR is a fundamentally different technology from traditional OCR engines such as Tesseract, PaddleOCR, or RapidOCR. Instead of acting as a lightweight OCR component inside the existing Docling pipeline, VLMs require larger models, more GPU memory, slower inference, and a different serving architecture. Because of this, they were not selected as a direct replacement for the default GlossAPI OCR path. Instead, it was concluded that VLM-based OCR should be integrated as a separate optional backend for users processing complex documents where higher extraction quality is more important than speed, cost, or hardware accessibility.
 
 **Conclusion**
 
